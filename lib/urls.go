@@ -6,48 +6,62 @@ import (
 )
 
 type CyURL struct {
-	CykerURL             url.URL
 	Change               bool
 	Encoding             string
 	AlreadyCalculatedUrl interface{}
 }
 
-func HasStartWithSchema(url string) string {
-	if strings.HasPrefix(url, "http://") || strings.HasPrefix(url, "https://") {
-		return url
+func ParserUrl(rawUrl string) (*url.URL, error) {
+	if strings.HasPrefix(rawUrl, "http://") || strings.HasPrefix(rawUrl, "https://") {
+		cyurl, _ := url.Parse(rawUrl)
+		return cyurl, nil
 	} else {
-		return "http://" + url
+		raw_url := "http://" + rawUrl
+		cyurl, _ := url.Parse(raw_url)
+		return cyurl, nil
 	}
 }
 
-func (self *CyURL) GetSchema() string {
-	return self.CykerURL.Scheme
+func (self *CyURL) GetSchema(u *url.URL) string {
+	return u.Scheme
 }
 
-func (self *CyURL) GetPort() string {
-	return self.CykerURL.Port()
+func (self *CyURL) GetPort(u *url.URL) string {
+	return u.Port()
 }
 
-func (self *CyURL) GetHostName() string {
-	return self.CykerURL.Hostname()
+func (self *CyURL) GetHostName(u *url.URL) string {
+	return u.Hostname()
 }
 
-func (self *CyURL) GetDomain() string {
-	return self.CykerURL.Host
+func (self *CyURL) GetDomain(u *url.URL) string {
+	return u.Host
 }
 
-func (self *CyURL) GetPath() string {
-	return self.CykerURL.Path
+func (self *CyURL) GetPath(u *url.URL) string {
+	return u.Path
 }
 
-func (self *CyURL) GetRawPath() string {
-	return self.CykerURL.RawPath
+func (self *CyURL) GetRawPath(u *url.URL) string {
+	return u.RawPath
 }
 
-func (self *CyURL) GetFragment() string {
-	return self.CykerURL.Fragment
+func (self *CyURL) GetFragment(u *url.URL) string {
+	return u.Fragment
 }
 
-func (self *CyURL) GetUrlString() string {
-	return self.CykerURL.String()
+func (self *CyURL) GetUrlString(u *url.URL) string {
+	return u.String()
+}
+
+func (self *CyURL) GetQuery(u *url.URL) url.Values {
+	return u.Query()
+}
+
+func (self *CyURL) GetRawQuery(u *url.URL) string {
+	return u.RawQuery
+}
+
+func (self *CyURL) GetRequestURI(u *url.URL) string {
+	return u.RequestURI()
 }
