@@ -29,10 +29,7 @@ Clown是一款交互式命令行漏洞验证工具,意在为不懂技术的人�
 
 
 #### 展示
-<video id="video" controls="" preload="none">
-<source id="mp4" src="./pic/clown.cast" type="video/mp4">
-</video>
-
+<iframe src="./pic/clown.cast" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
 
 #### TODO
 
