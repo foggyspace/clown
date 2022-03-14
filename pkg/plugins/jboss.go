@@ -3,6 +3,8 @@ package plugins
 import (
 	"fmt"
 	"net/http"
+
+	"github.com/seaung/clown/pkg/utils"
 )
 
 type JbossCve201712149 struct {
@@ -33,7 +35,7 @@ func (j *JbossCve201712149) Audit(target string) {
 
 	request, err := http.NewRequest("POST", vulnUrl, nil)
 	if err != nil {
-		fmt.Printf("Request Cread Error : %v\n", err)
+		utils.NewLogger().ErrorLog(fmt.Sprintf("Request Cread Error : %v\n", err))
 	}
 
 	request.Header.Set("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.14; rv:63.0) Gecko/20100101 Firefox/63.0")
@@ -45,16 +47,16 @@ func (j *JbossCve201712149) Audit(target string) {
 
 	response, err := client.Do(request)
 	if err != nil {
-		fmt.Printf("Send Request Error : %v", err)
+		utils.NewLogger().ErrorLog(fmt.Sprintf("Send Request Error : %v\n", err))
 	}
 
 	defer response.Body.Close()
 
 	if response.StatusCode == 500 {
-		fmt.Println("[*] Found Vulnerable !")
-		fmt.Println("Vulnerable Name   : ", info.PluginName)
-		fmt.Println("Vulnerable Level  : ", info.VulnsInfo.Level)
+		utils.NewLogger().Warnning("Found Vulnerable !")
+		utils.NewLogger().Warnning(fmt.Sprintf("Vulnerable Name   : %s\n", info.PluginName))
+		utils.NewLogger().Warnning(fmt.Sprintf("Vulnerable Level  : %s\n", info.VulnsInfo.Level))
 	} else {
-		fmt.Println("[!] Not Found Vulnerable")
+		utils.NewLogger().Info("Not Found Vulnerable")
 	}
 }

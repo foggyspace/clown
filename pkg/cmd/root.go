@@ -4,17 +4,16 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/seaung/clown/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
 var longTxt = `
- #####                              
-#     # #       ####  #    # #    # 
-#       #      #    # #    # ##   # 
-#       #      #    # #    # # #  # 
-#       #      #    # # ## # #  # # 
-#     # #      #    # ##  ## #   ## 
- #####  ######  ####  #    # #    # 
+        __                  
+  _____/ /___ _      ______ 
+ / ___/ / __ \ | /| / / __ \
+/ /__/ / /_/ / |/ |/ / / / /
+\___/_/\____/|__/|__/_/ /_/ 
 
         Version: 1.1.1
         小丑竟然是我自己?
@@ -30,7 +29,7 @@ var rootCmd = &cobra.Command{
 
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
-		fmt.Printf("[*] A valid command %+v\n", err)
+		utils.NewLogger().Warnning(fmt.Sprintf("A valid command %v\n", err))
 		os.Exit(1)
 	}
 }

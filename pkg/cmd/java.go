@@ -6,6 +6,7 @@ import (
 
 	"github.com/manifoldco/promptui"
 	"github.com/seaung/clown/pkg/plugins"
+	"github.com/seaung/clown/pkg/utils"
 	"github.com/spf13/cobra"
 )
 
@@ -37,15 +38,16 @@ func run() {
 
 	gategories := getSelectJavaCategoriesPrompt(selectGateroiesPrompt)
 
-	fmt.Println("[*] 需要检测的目标为  : ", target)
-	fmt.Println("[*] 您选择的漏洞类型为: ", gategories)
+	utils.NewLogger().Info(fmt.Sprintf("需要检测的目标为  : %s\n", target))
+	utils.NewLogger().Info(fmt.Sprintf("您选择的漏洞类型为: %s\n", gategories))
+
 	runVulns(target, gategories)
 }
 
 func runVulns(target, gategories string) {
 	switch gategories {
 	default:
-		fmt.Println("您是不是忘记选择漏洞类型了?")
+		utils.NewLogger().Warnning("您是不是忘记选择漏洞类型了?")
 	case "jboss":
 		jboss := &plugins.JbossCve201712149{}
 		jboss.Audit(target)
@@ -74,7 +76,7 @@ func getSelectJavaCategoriesPrompt(cpc clownPromptContent) string {
 	}
 
 	if err != nil {
-		fmt.Printf("Prompt Select Error %v\n", err)
+		utils.NewLogger().ErrorLog(fmt.Sprintf("Prompt Select Error %v\n", err))
 		os.Exit(1)
 	}
 

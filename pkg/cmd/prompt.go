@@ -6,6 +6,7 @@ import (
 	"os"
 
 	"github.com/manifoldco/promptui"
+	"github.com/seaung/clown/pkg/utils"
 )
 
 type clownPromptContent struct {
@@ -36,7 +37,7 @@ func getPromptInput(cpc clownPromptContent) string {
 
 	content, err := prompt.Run()
 	if err != nil {
-		fmt.Printf("[!] Prompt Error %v\n", err)
+		utils.NewLogger().ErrorLog(fmt.Sprintf("[!] Prompt Error %v\n", err))
 		os.Exit(1)
 	}
 
@@ -65,7 +66,7 @@ func getSelectPrompt(cpc clownPromptContent) string {
 	}
 
 	if err != nil {
-		fmt.Printf("Prompt Select Error %v\n", err)
+		utils.NewLogger().ErrorLog(fmt.Sprintf("Prompt Select Error %v\n", err))
 		os.Exit(1)
 	}
 
